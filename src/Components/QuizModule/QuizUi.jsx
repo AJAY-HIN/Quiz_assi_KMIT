@@ -61,7 +61,6 @@ const QuizUi = () => {
       ...ele,
       options: ele?.options?.sort(() => Math.random() - 0.5),
     }));
-    // console.log(res, 'res====================');
     setQuestionData(res);
   }, []);
 
@@ -76,75 +75,73 @@ const QuizUi = () => {
     setSelectedOption(0);
   };
 
-  // console.log(questionData, 'data');
-
-  const score = Number(currentQuestion) * 5;
-  // const { questionText, level, answerOptions, answer } =
-  //   questions[currentQuestion] || {};
+  const score = (Number(currentQuestion) * 100) / questionData.length;
   return (
     <>
       <Text className="headingText">Quiz APP</Text>
       <QuizContainer>
         <Progress scroll={`${score}%`} />
-        {score === 100 ? (
-          <StarBox className="completedPage">
-            <CompletedText>Yay!😄 Completed</CompletedText>
-            <Button onClick={resetAll}>Restart</Button>
-          </StarBox>
-        ) : (
-          <>
-            <QuestionNumber>
-              Question {currentQuestion + 1} of {questionData.length}{' '}
-            </QuestionNumber>
-            <Title>{questionData[currentQuestion]?.category}</Title>
-            <StarBox>
-              {difficultyLevel?.[
-                questionData[currentQuestion]?.difficulty
-              ]?.map((ele, i) => (
-                <Star fill={ele === true ? '#FFD93D' : 'none'} />
-              ))}
+        <div style={{ width: '60%' }}>
+          {score === 100 ? (
+            <StarBox className="completedPage">
+              <CompletedText>Yay!😄 Completed</CompletedText>
+              <Button onClick={resetAll}>Restart</Button>
             </StarBox>
-            <FLexDiv>
-              <Question>{questionData[currentQuestion]?.question}</Question>
-            </FLexDiv>
+          ) : (
+            <>
+              <QuestionNumber>
+                Question {currentQuestion + 1} of {questionData.length}{' '}
+              </QuestionNumber>
+              <Title>{questionData[currentQuestion]?.category}</Title>
+              <StarBox>
+                {difficultyLevel?.[
+                  questionData[currentQuestion]?.difficulty
+                ]?.map((ele, i) => (
+                  <Star fill={ele === true ? '#FFD93D' : 'none'} />
+                ))}
+              </StarBox>
+              <FLexDiv>
+                <Question>{questionData[currentQuestion]?.question}</Question>
+              </FLexDiv>
 
-            <OptionsConatiner>
-              {questionData[currentQuestion]?.options.map((option, i) => {
-                return (
-                  <>
-                    <OptionsBtn
-                      className={`option-btn checked ${
-                        selectedOption === option
-                          ? selectedOption ===
-                            questionData[currentQuestion].correct_answer
-                            ? 'bgSuccess'
-                            : 'bgRed'
-                          : ''
-                      }`}
-                      key={i}
-                      onClick={() => handleCheckAnswer(option)}
-                    >
-                      {option}
-                    </OptionsBtn>
-                  </>
-                );
-              })}
-            </OptionsConatiner>
-            <Text className="massege">{notification}</Text>
-            <Div>
-              <Button
-                disabled={
-                  selectedOption !==
-                  questionData[currentQuestion]?.correct_answer
-                }
-                type="submit"
-                onClick={changeQuestion}
-              >
-                Next
-              </Button>
-            </Div>
-          </>
-        )}
+              <OptionsConatiner>
+                {questionData[currentQuestion]?.options.map((option, i) => {
+                  return (
+                    <>
+                      <OptionsBtn
+                        className={`option-btn checked ${
+                          selectedOption === option
+                            ? selectedOption ===
+                              questionData[currentQuestion].correct_answer
+                              ? 'bgSuccess'
+                              : 'bgRed'
+                            : ''
+                        }`}
+                        key={i}
+                        onClick={() => handleCheckAnswer(option)}
+                      >
+                        {option}
+                      </OptionsBtn>
+                    </>
+                  );
+                })}
+              </OptionsConatiner>
+              <Text className="massege">{notification}</Text>
+              <Div>
+                <Button
+                  disabled={
+                    selectedOption !==
+                    questionData[currentQuestion]?.correct_answer
+                  }
+                  type="submit"
+                  onClick={changeQuestion}
+                >
+                  Next
+                </Button>
+              </Div>
+            </>
+          )}
+        </div>
       </QuizContainer>
     </>
   );

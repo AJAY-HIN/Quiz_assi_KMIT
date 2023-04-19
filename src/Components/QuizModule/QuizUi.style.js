@@ -3,13 +3,12 @@ import styled from 'styled-components';
 export const QuizContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   min-height: 500px;
-  width: 600px;
   background-color: white;
   box-shadow: 2px 2px 10px 1px #333;
   overflow: hidden;
-  padding: 10px;
+  ${'' /* padding: 10px; */}
   position: relative;
 `;
 
@@ -24,7 +23,7 @@ export const Text = styled.p`
   &.massege {
     color: black;
     text-align: center;
-    width: 100%;
+    width: 80%;
   }
 `;
 
@@ -51,22 +50,17 @@ export const Container = styled.div`
 `;
 
 export const FLexDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 10px 0px;
+  margin: 15px 0px;
 `;
 
 export const QuestionNumber = styled.h2`
   ${'' /* margin-right: 5px; */}
-  text-align:left;
 `;
 
 export const OptionsConatiner = styled.div`
   display: flex;
-  ${'' /* flex-direction: column; */}
-  ${'' /* justify-content: center; */}
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 3rem;
   width: 100%;
   padding: 10px;
 `;
@@ -80,7 +74,7 @@ export const OptionsBtn = styled.button`
   min-height: 30px;
   background-color: #eeeeee;
   cursor: pointer;
-  width: 260px;
+  width: 280px;
 
   &.checked {
     color: black;
@@ -127,9 +121,9 @@ export const Progress = styled.div`
   );
   transition: all ease-in-out 0.4s;
   width: 100%;
-  bottom: 5px;
-  height: 8px;
-  border-radius: 10px;
+  ${'' /* bottom: 5px; */}
+  height: 10px;
+  ${'' /* border-radius: 10px; */}
 `;
 
 export const StarBox = styled.div`
