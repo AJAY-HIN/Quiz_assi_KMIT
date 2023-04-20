@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { questions } from '../Data/questions';
 import {
   Button,
@@ -17,12 +17,12 @@ import {
   Title,
 } from './QuizUi.style.js';
 import Star from '../Star/Star';
-import { useEffect } from 'react';
 const QuizUi = () => {
   const [questionData, setQuestionData] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(0);
   const [notification, setNotiFication] = useState(null);
+  const [yourScore, setYourScore] = useState(0);
 
   const changeQuestion = () => {
     if (currentQuestion < questions.length) {
@@ -30,12 +30,15 @@ const QuizUi = () => {
       setSelectedOption(0);
       setNotiFication(null);
     }
+    if (notification === 'Correct!') {
+      setYourScore(yourScore + 1);
+    }
   };
 
   const handleCheckAnswer = (ele) => {
     setSelectedOption(ele);
     if (questionData[currentQuestion].correct_answer !== ele) {
-      setNotiFication('Sorry! Please Try again');
+      setNotiFication('Wrong! Please Try again');
     } else {
       setNotiFication('Correct!');
     }
@@ -73,9 +76,12 @@ const QuizUi = () => {
   const resetAll = () => {
     setCurrentQuestion(0);
     setSelectedOption(0);
+    setNotiFication(null);
   };
 
   const score = (Number(currentQuestion) * 100) / questionData.length;
+  console.log(yourScore);
+
   return (
     <>
       <Text className="headingText">Quiz APP</Text>
@@ -84,7 +90,9 @@ const QuizUi = () => {
         <div style={{ width: '60%' }}>
           {score === 100 ? (
             <StarBox className="completedPage">
-              <CompletedText>Yay!😄 Completed</CompletedText>
+              <CompletedText>
+                Yay!😄 Completed score {yourScore}/20
+              </CompletedText>
               <Button onClick={resetAll}>Restart</Button>
             </StarBox>
           ) : (
@@ -129,10 +137,7 @@ const QuizUi = () => {
               <Text className="massege">{notification}</Text>
               <Div>
                 <Button
-                  disabled={
-                    selectedOption !==
-                    questionData[currentQuestion]?.correct_answer
-                  }
+                  disabled={notification === null}
                   type="submit"
                   onClick={changeQuestion}
                 >
